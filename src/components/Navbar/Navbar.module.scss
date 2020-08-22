@@ -1,0 +1,12 @@
+.Navbar {
+    width: 100%;
+    background: white;
+}
+
+.Navbar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 1rem;
+}
