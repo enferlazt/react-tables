@@ -2,12 +2,10 @@ import React from 'react'
 import classes from './Submit.module.scss'
 
 export const Submit = props => {
-    const cls = [classes.Submit]
+    const cls = [classes.Submit, 'button']
+    if(props.className) cls.push(props.className)
 
     return (
-        <div className={cls.join(' ')}>
-            <input type="submit" className="button" value={props.value} onClick={props.clickHandler}></input>
-            {!props.formValid && <span style={{marginTop: '1rem'}} className="form-error is-visible">The form has incorrect values in the fields</span>}
-        </div>
+        <input type="submit" className={cls.join(' ')} disabled={props.disabled} value={props.value} onClick={props.clickHandler}></input>
     )
 }

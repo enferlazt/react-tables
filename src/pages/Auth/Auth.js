@@ -7,7 +7,6 @@ import { validInput } from '../../additional/validInput'
 
 const Auth = () => {
     const [signIn, setSignIn] = useState({
-        formValid: true,
         inputs: {
             email: {
                 value: '',
@@ -71,7 +70,7 @@ const Auth = () => {
         }
     })
 
-    function changeHandlerSignIn(e, item){
+    const changeHandlerSignIn = (e, item) => {
         const value = e.target.value
         setSignIn(prev => ({
             ...prev,
@@ -86,7 +85,7 @@ const Auth = () => {
         }))
     }
 
-    function changeHandlerSignUp(e, item){
+    const changeHandlerSignUp = (e, item) => {
         const value = e.target.value
         setSignUp(prev => ({
             ...prev,
@@ -102,9 +101,11 @@ const Auth = () => {
     }
 
     const clickHandlerSignIn = () => {
+        let validForm = true
         Object.keys(signIn.inputs).forEach(item => {
             const inputParams = signIn.inputs[item]
             if(!validInput(inputParams.value, inputParams.validation)){
+                validForm = false
                 setSignIn(prev => ({
                     ...prev,
                     inputs: {
@@ -117,12 +118,17 @@ const Auth = () => {
                 }))
             }
         })
+        if(validForm) {
+
+        }
     }
 
     const clickHandlerSignUp = () => {
+        let validForm = true
         Object.keys(signUp.inputs).forEach(item => {
             const inputParams = signUp.inputs[item]
             if(!validInput(inputParams.value, inputParams.validation, signUp.inputs)){
+                validForm = false
                 setSignUp(prev => ({
                     ...prev,
                     inputs: {
@@ -135,6 +141,9 @@ const Auth = () => {
                 }))
             }
         })
+        if(validForm) {
+            
+        }
     }
 
     return (
@@ -158,7 +167,7 @@ const Auth = () => {
                                 changeHandler={changeHandlerSignIn}
                             />
                     )})}
-                    <Submit value="Sign In" formValid={signIn.formValid} clickHandler={clickHandlerSignIn} />
+                    <Submit value="Sign In" clickHandler={clickHandlerSignIn} />
                 </form>
             </div>
             <div className={classes.Auth__delimiter}>
@@ -183,7 +192,7 @@ const Auth = () => {
                                 changeHandler={changeHandlerSignUp}
                             />
                     )})}
-                    <Submit value="Sign Up" formValid={signUp.formValid} clickHandler={clickHandlerSignUp} />
+                    <Submit value="Sign Up" clickHandler={clickHandlerSignUp} />
                 </form>
             </div>
         </div>
