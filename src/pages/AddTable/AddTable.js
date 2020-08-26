@@ -21,7 +21,7 @@ const AddTable = () => {
                 minLength: 1
             },
             valid: true,
-            selector: 0,
+            selector: 'text',
         }])
     }
 
@@ -36,6 +36,17 @@ const AddTable = () => {
         }))
     }
 
+    const changeSelectHandler = (e, item) => {
+        const value = e.target.value
+        setHeaders(prev => prev.map((header, index) => {
+            if(index === item){
+                header.selector = value
+            }
+            console.log(header)
+            return header
+        }))
+    }
+
     const addHandler = () => {
         setHeaders(prev => ([
             ...prev,
@@ -44,7 +55,7 @@ const AddTable = () => {
                 value: '',
                 valid: true,
                 id: `column-title-${headers.length}`,
-                selector: 0
+                selector: 'text'
             }
         ]))
     }
@@ -90,7 +101,7 @@ const AddTable = () => {
                         </div>
                         <div style={{position: "relative"}} className="cell small-12 medium-4 large-4">
                             <label>Column Type {index + 1}</label>
-                            <select className={classes.AddTable__select}>
+                            <select className={classes.AddTable__select} value={header.selector} onChange={(e) => changeSelectHandler(e, index)}>
                             {types.map((type, i) => {
                                 const title = type[0].toUpperCase() + type.slice(1)
                                 return (

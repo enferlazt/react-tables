@@ -1,0 +1,42 @@
+.Table {
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 20px 50px -15px rgba(138, 138, 138, 0.8);
+    border: 1px solid rgba(138, 138, 138, 0.5);
+    width: 100%;
+    padding: 3rem;
+    margin: auto;
+
+    &__content {
+        margin-bottom: 0;
+
+        * {
+            margin: 0;
+        }
+
+        th:not(:last-child) {
+            min-width: 80px;
+            max-width: 200px;
+        }
+
+        input[type="checkbox"] {
+            height: 20px;
+            width: 20px;
+            margin: auto;
+            display: flex;
+        }
+    }
+
+    &__btn_err {
+        top: 0;
+        padding: 10px;
+        height: 39px;
+        width: 39px !important;
+    }
+
+    &__btn_suc {
+        padding: 10px;
+        height: 39px;
+        width: 39px !important;
+        margin-bottom: 1rem !important;
+    }
+}
