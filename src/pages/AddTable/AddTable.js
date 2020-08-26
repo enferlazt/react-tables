@@ -6,6 +6,10 @@ import { Input } from '../../components/form/Input/Input'
 import { validInput } from '../../additional/validInput'
 
 const AddTable = () => {
+    const [tableName, setTableName] = useState({
+        value: '',
+        valid: true
+    })
     const [headers, setHeaders] = useState([])
     const types = ['text', 'number', 'checkbox', 'time', 'date']
     const btnError = `${classes.AddTable__btn_err} alert`
@@ -66,6 +70,12 @@ const AddTable = () => {
 
     const submitFormHandler = () => {
         let validForm = true
+        if(!validInput(tableName.value, {minLength: 1})){
+            setTableName({
+                value: tableName.value,
+                valid: false
+            })
+        }
         headers.forEach((header, index) => {
             if(!validInput(header.value, header.validation)){
                 setHeaders(prev => prev.filter((itemPrev, indexPrev) => {
@@ -84,6 +94,20 @@ const AddTable = () => {
     return (
         <div className={classes.AddTable}>
             <form onSubmit={(e) => e.preventDefault()} >
+                <Input
+                    value={tableName.value}
+                    label="Table Name"
+                    type="text"
+                    id="table_name"
+                    valid={tableName.valid}
+
+                    changeHandler={(e) => {
+                        setTableName({
+                            value: e.target.value,
+                            valid: validInput(e.target.value, {minLength: 1})
+                        })
+                    }}
+                />
                 {headers.map((header, index) => (
                     <div className="grid-x grid-padding-x" key={index}>
                         <div className="cell small-12 medium-8 large-8">

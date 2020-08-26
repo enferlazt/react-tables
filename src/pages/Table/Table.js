@@ -8,6 +8,8 @@ const Table = () => {
     const btnError = `${classes.Table__btn_err} alert`
     const btnSuccess = `${classes.Table__btn_suc} success`
 
+    const tableName = 'Test Table'
+
     const tableParams = [
         {
             title: 'Name',
@@ -82,6 +84,7 @@ const Table = () => {
 
     return (
         <div className={classes.Table}>
+            <h3>{tableName}</h3>
             <div className="table-scroll" style={{marginBottom: '1rem'}}>
                 <table className={classes.Table__content}>
                     <thead>
@@ -111,10 +114,10 @@ const Table = () => {
             </div>
                 <Submit value="✚" className={btnSuccess} clickHandler={addRowHandler}/>
                 <div className="grid-x grid-padding-x">
-                    <div className="cell small-12 medium-6 large-6">
+                    <div className="cell small-12 medium-6 large-6" style={{marginTop: '1rem'}}>
                         <Submit value="Save" className="success" />
                     </div>
-                    <div className="cell small-12 medium-6 large-6">
+                    <div className="cell small-12 medium-6 large-6" style={{marginTop: '1rem'}}>
                         <Submit value="Drop Table" className="alert" />
                     </div>
                 </div>

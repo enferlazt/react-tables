@@ -6,115 +6,96 @@ import { Submit } from '../../components/form/Submit/Submit'
 import { validInput } from '../../additional/validInput'
 
 const Auth = () => {
-    const [signIn, setSignIn] = useState({
-        inputs: {
-            email: {
-                value: '',
-                type: 'text',
-                label: 'Email',
-                id: 'sign-in-email',
-                validation: {
-                    minLength: 1
-                },
-                valid: true
+    const [signIn, setSignIn] = useState([
+        {
+            value: '',
+            type: 'text',
+            label: 'Email',
+            id: 'sign-in-email',
+            validation: {
+                minLength: 1
             },
-            password: {
-                value: '',
-                type: 'password',
-                label: 'Password',
-                id: 'sign-in-password',
-                validation: {
-                    minLength: 6
-                },
-                errMessage: 'Password must contain 6 or more characters',
-                valid: true
-            }
+            valid: true
+        },
+        {
+            value: '',
+            type: 'password',
+            label: 'Password',
+            id: 'sign-in-password',
+            validation: {
+                minLength: 6
+            },
+            errMessage: 'Password must contain 6 or more characters',
+            valid: true
         }
-    })
+    ])
 
-    const [signUp, setSignUp] = useState({
-        formValid: true,
-        inputs: {
-            email: {
-                value: '',
-                type: 'text',
-                label: 'Email',
-                id: 'sign-up-email',
-                validation: {
-                    minLength: 1
-                },
-                valid: true
+    const [signUp, setSignUp] = useState([
+       {
+            value: '',
+            type: 'text',
+            label: 'Email',
+            id: 'sign-up-email',
+            validation: {
+                minLength: 1
             },
-            password: {
-                value: '',
-                type: 'password',
-                label: 'Password',
-                id: 'sign-up-password',
-                validation: {
-                    minLength: 6
-                },
-                errMessage: 'Password must contain 6 or more characters',
-                valid: true
+            valid: true
+        },
+        {
+            value: '',
+            type: 'password',
+            label: 'Password',
+            id: 'sign-up-password',
+            validation: {
+                minLength: 6
             },
-            repeat_password: {
-                value: '',
-                type: 'password',
-                label: 'Repeat Password',
-                id: 'sign-up-repeat-password',
-                validation: {
-                    matchesWith: 'password'
-                },
-                errMessage: 'Password mismatch',
-                valid: true
-            }
+            errMessage: 'Password must contain 6 or more characters',
+            valid: true
+        },
+        {
+            value: '',
+            type: 'password',
+            label: 'Repeat Password',
+            id: 'sign-up-repeat-password',
+            validation: {
+                matchesWith: 1
+            },
+            errMessage: 'Password mismatch',
+            valid: true
         }
-    })
+    ])
 
     const changeHandlerSignIn = (e, item) => {
         const value = e.target.value
-        setSignIn(prev => ({
-            ...prev,
-            inputs: {
-                ...prev.inputs,
-                [item]: {
-                    ...prev.inputs[item],
-                    value: value,
-                    valid: validInput(value, prev.inputs[item].validation)
-                }
+        setSignIn(prev => prev.map((elem, index) => {
+            if(index === item){
+                elem.value = value
+                elem.valid = validInput(elem.value, elem.validation)
             }
+            return elem
         }))
     }
 
     const changeHandlerSignUp = (e, item) => {
         const value = e.target.value
-        setSignUp(prev => ({
-            ...prev,
-            inputs: {
-                ...prev.inputs,
-                [item]: {
-                    ...prev.inputs[item],
-                    value: value,
-                    valid: validInput(value, prev.inputs[item].validation, prev.inputs)
-                }
+        setSignUp(prev => prev.map((elem, index) => {
+            if(index === item){
+                elem.value = value
+                elem.valid = validInput(elem.value, elem.validation, prev)
             }
+            return elem
         }))
     }
 
     const clickHandlerSignIn = () => {
         let validForm = true
-        Object.keys(signIn.inputs).forEach(item => {
-            const inputParams = signIn.inputs[item]
-            if(!validInput(inputParams.value, inputParams.validation)){
-                validForm = false
-                setSignIn(prev => ({
-                    ...prev,
-                    inputs: {
-                        ...prev.inputs,
-                        [item]: {
-                            ...prev.inputs[item],
-                            valid: false
-                        }
+        signIn.forEach((elem, index) => {
+            if(!validInput(elem.value, elem.validation)){
+                setSignIn(prev => prev.filter((itemPrev, indexPrev) => {
+                    if(indexPrev === index){
+                        itemPrev.valid = false
                     }
+                    return itemPrev
                 }))
             }
         })
@@ -125,19 +106,13 @@ const Auth = () => {
 
     const clickHandlerSignUp = () => {
         let validForm = true
-        Object.keys(signUp.inputs).forEach(item => {
-            const inputParams = signUp.inputs[item]
-            if(!validInput(inputParams.value, inputParams.validation, signUp.inputs)){
-                validForm = false
-                setSignUp(prev => ({
-                    ...prev,
-                    inputs: {
-                        ...prev.inputs,
-                        [item]: {
-                            ...prev.inputs[item],
-                            valid: false
-                        }
+        signUp.forEach((elem, index) => {
+            if(!validInput(elem.value, elem.validation, signUp)){
+                setSignUp(prev => prev.filter((itemPrev, indexPrev) => {
+                    if(indexPrev === index){
+                        itemPrev.valid = false
                     }
+                    return itemPrev
                 }))
             }
         })
@@ -150,23 +125,21 @@ const Auth = () => {
         <div className={classes.Auth}>
             <div className={classes.Auth__block}>
                 <form onSubmit={e => e.preventDefault()}>
-                    {Object.keys(signIn.inputs).map((item, index) => {
-                        const inputParams = signIn.inputs[item];
-                        return (
-                            <Input
-                                key={index}
-                                item={item}
+                    {signIn.map((item, index) => (
+                        <Input
+                            key={index}
+                            item={index}
 
-                                type={inputParams.type}
-                                id={inputParams.id}
-                                label={inputParams.label}
-                                value={inputParams.value}
-                                valid={inputParams.valid}
-                                errMessage={inputParams.errMessage}
+                            type={item.type}
+                            id={item.id}
+                            label={item.label}
+                            value={item.value}
+                            valid={item.valid}
+                            errMessage={item.errMessage}
 
-                                changeHandler={changeHandlerSignIn}
-                            />
-                    )})}
+                            changeHandler={changeHandlerSignIn}
+                        />
+                    ))}
                     <Submit value="Sign In" clickHandler={clickHandlerSignIn} />
                 </form>
             </div>
@@ -175,23 +148,21 @@ const Auth = () => {
             </div>
             <div className={classes.Auth__block}>
                 <form onSubmit={e => e.preventDefault()}>
-                    {Object.keys(signUp.inputs).map((item, index) => {
-                        const inputParams = signUp.inputs[item];
-                        return (
-                            <Input
-                                key={index}
-                                item={item}
+                    {signUp.map((item, index) => (
+                        <Input
+                            key={index}
+                            item={index}
 
-                                type={inputParams.type}
-                                id={inputParams.id}
-                                label={inputParams.label}
-                                value={inputParams.value}
-                                valid={inputParams.valid}
-                                errMessage={inputParams.errMessage}
+                            type={item.type}
+                            id={item.id}
+                            label={item.label}
+                            value={item.value}
+                            valid={item.valid}
+                            errMessage={item.errMessage}
 
-                                changeHandler={changeHandlerSignUp}
-                            />
-                    )})}
+                            changeHandler={changeHandlerSignUp}
+                        />
+                    ))}
                     <Submit value="Sign Up" clickHandler={clickHandlerSignUp} />
                 </form>
             </div>
