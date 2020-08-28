@@ -2,20 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import classes from './Navbar.module.scss'
 
-export default () => (
+export default ({username}) => (
     <nav className={classes.Navbar}>
         <ul>
             <li>
-                <Link to="/">List of Tables</Link>
-            </li>
-            <li>
-                <Link to="/table">Table</Link>
-            </li>
-            <li>
-                <Link to="/auth">Auth</Link>
-            </li>
-            <li>
-                <Link to="/logout">Logout</Link>
+                <Link to="/">{username}</Link>
+                <div className={classes.Navbar__dropdown}>
+                    <Link to="/logout">Logout</Link>
+                </div>
             </li>
             <li>
                 <Link to="/add-table">Add Table</Link>

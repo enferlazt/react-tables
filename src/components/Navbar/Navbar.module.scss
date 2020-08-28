@@ -1,12 +1,37 @@
 .Navbar {
     width: 100%;
     background: white;
-}
+    position: relative;
 
-.Navbar ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    list-style-type: none;
-    margin: 1rem;
+    &__dropdown {
+        display: none;
+        position: absolute;
+        background: white;
+        height: 57px;
+        cursor: pointer;
+        padding: 1rem;
+        left: 0;
+
+        &:hover {
+            background: linear-gradient(to top, rgb(199, 199, 199), white);
+            display: block;
+        }
+    }
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        list-style-type: none;
+        margin: 1rem;
+        
+        li:hover .Navbar__dropdown {
+            display: block;
+        }
+
+        a {
+            color: #383838;
+            font-weight: bold;
+        }
+    }
 }

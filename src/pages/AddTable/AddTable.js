@@ -75,6 +75,7 @@ const AddTable = () => {
                 value: tableName.value,
                 valid: false
             })
+            validForm = false
         }
         headers.forEach((header, index) => {
             if(!validInput(header.value, header.validation)){
@@ -84,6 +85,7 @@ const AddTable = () => {
                     }
                     return itemPrev
                 }))
+                validForm = false
             }
         })
         if(validForm){

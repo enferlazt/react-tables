@@ -7,5 +7,9 @@ export function validInput (value, validation, additional) {
         return false
     }
 
+    if(validation.regEx && !validation.regEx.test(value)) {
+        return false
+    }
+
     return true
 }

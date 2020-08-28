@@ -4,8 +4,9 @@ import classes from './Auth.module.scss'
 import { Input } from '../../components/form/Input/Input'
 import { Submit } from '../../components/form/Submit/Submit'
 import { validInput } from '../../additional/validInput'
+import { auth } from '../../redux/actions/authActions'
 
-const Auth = () => {
+const Auth = ({authFetch}) => {
     const [signIn, setSignIn] = useState([
         {
             value: '',
@@ -13,8 +14,9 @@ const Auth = () => {
             label: 'Email',
             id: 'sign-in-email',
             validation: {
-                minLength: 1
+                regEx: /^[a-z0-9_-]+(\.[a-z0-9_-]+)*@([a-z0-9]+(-[a-z0-9]+)?\.)+[a-z0-9]+(-[a-z0-9]+)?$/i
             },
+            errMessage: 'Invalid Email',
             valid: true
         },
         {
@@ -37,8 +39,9 @@ const Auth = () => {
             label: 'Email',
             id: 'sign-up-email',
             validation: {
-                minLength: 1
+                regEx: /^[a-z0-9_-]+(\.[a-z0-9_-]+)*@([a-z0-9]+(-[a-z0-9]+)?\.)+[a-z0-9]+(-[a-z0-9]+)?$/i
             },
+            errMessage: 'Invalid Email',
             valid: true
         },
         {
@@ -97,10 +100,11 @@ const Auth = () => {
                     }
                     return itemPrev
                 }))
+                validForm = false
             }
         })
         if(validForm) {
-
+            authFetch(signIn[0].value, signIn[1].value, 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDm4jrDK7CvVKDXFBCRUeg-wFT2K4FddaM')
         }
     }
 
@@ -114,10 +118,11 @@ const Auth = () => {
                     }
                     return itemPrev
                 }))
+                validForm = false
             }
         })
         if(validForm) {
-            
+            authFetch(signUp[0].value, signUp[1].value, 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDm4jrDK7CvVKDXFBCRUeg-wFT2K4FddaM')
         }
     }
 
@@ -170,5 +175,10 @@ const Auth = () => {
     )
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        authFetch: (email, password, url) => dispatch(auth(email, password, url))
+    }
+}
 
-export default connect(null)(Auth)
+export default connect(null, mapDispatchToProps)(Auth)

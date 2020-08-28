@@ -4,10 +4,21 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { RootReducer } from './redux/rootReducer';
+import { createStore, compose, applyMiddleware } from 'redux';
+import { rootReducer } from './redux/rootReducer';
+import createSagaMiddleware from 'redux-saga';
+import {authSaga} from './redux/sagas/authSaga.js'
 
-const store = createStore(RootReducer)
+const saga = createSagaMiddleware()
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(saga))
+)
+
+saga.run(authSaga)
 
 ReactDOM.render(
   <BrowserRouter>
