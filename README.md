@@ -10,7 +10,7 @@ This app is let fast create tables and easy fill them. The tables store in close
 
 [react-tables.web.app](https://react-tables.web.app)
 
-react-tables.firebaseapp.com
+[react-tables.firebaseapp.com](https://react-tables.firebaseapp.com)
 
 ### Demo
 
