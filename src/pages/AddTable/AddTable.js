@@ -4,8 +4,10 @@ import classes from './AddTable.module.scss'
 import { Submit } from '../../components/form/Submit/Submit'
 import { Input } from '../../components/form/Input/Input'
 import { validInput } from '../../additional/validInput'
+import { addTable } from '../../redux/actions/addTableActions'
+import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 
-const AddTable = () => {
+const AddTable = ({error, addTableFetch}) => {
     const [tableName, setTableName] = useState({
         value: '',
         valid: true
@@ -46,7 +48,6 @@ const AddTable = () => {
             if(index === item){
                 header.selector = value
             }
-            console.log(header)
             return header
         }))
     }
@@ -89,7 +90,7 @@ const AddTable = () => {
             }
         })
         if(validForm){
-
+            addTableFetch(tableName.value, headers)
         }
     }
 
@@ -142,8 +143,21 @@ const AddTable = () => {
                 <Submit value="✚" className={btnSuccess} clickHandler={addHandler}></Submit>
                 <Submit value="Add Table" className="success" clickHandler={submitFormHandler}></Submit>
             </form>
+            {error && <ErrorMessage error={error} />}
         </div>
     )
 }
 
-export default connect(null)(AddTable)
+const mapStateToProps = state => {
+    return {
+        error: state.addTable.error
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addTableFetch: (name, headers) => dispatch(addTable(name, headers))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTable)

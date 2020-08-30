@@ -1,47 +1,44 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import classes from './TableList.module.scss'
+import { tableList, tableItem } from '../../redux/actions/tablesActions'
+import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 
-const TableList = () => {
-    const listOfTables = [
-        {
-            name: 'Test Table 1',
-            headers: [{}, {}, {}, {}, {}],
-            fields: [{}, {}, {}]
-        },
-        {
-            name: 'Test Table 2',
-            headers: [{}, {}, {}, {}, {}],
-            fields: [{}, {}, {}, {}, {}]
-        },
-        {
-            name: 'Test Table 3',
-            headers: [{}, {}, {}, {}, {}, {}, {}, {}],
-            fields: [{}, {}, {}, {}, {}, {}, {}, {}, {}]
-        },
-        {
-            name: 'Test Table 4',
-            headers: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-            fields: [{}, {}, {}, {}, {}, {}, {}]
-        },
-        {
-            name: 'Test Table 5',
-            headers: [{}, {}],
-            fields: [{}, {}, {}, {}, {}, {}, {}, {}, {}]
-        }
-    ]
+const TableList = ({listOfTables, error, tableListFetch, tableItemFetch}) => {
+    useEffect(() => {
+        tableListFetch()
+    }, [tableListFetch])
 
     return (
         <div className={classes.TableList}>
-            {listOfTables.map((tableDesc, index) => (
-                <div key={index} className={classes.TableList__container}>
-                    <h3>{tableDesc.name}</h3>
-                    <span>{`Column: ${tableDesc.headers.length}`}</span>
-                    <span>{`Rows: ${tableDesc.fields.length}`}</span>
-                </div>
-            ))}
+            {
+                listOfTables === null ?
+                <h2 style={{textAlign: 'center'}}>No tables</h2> :
+                Object.keys(listOfTables).length > 0 && Object.keys(listOfTables).map((id, index) => (
+                    <div key={index} className={classes.TableList__container} onClick={() => tableItemFetch(id)}>
+                        <h3>{listOfTables[id].tableName}</h3>
+                        <span>{`Column: ${listOfTables[id].tableHeaders.length}`}</span>
+                        <span>{`Rows: ${listOfTables[id].tableFields?.length || '1'}`}</span>
+                    </div>
+                ))
+            }
+            {error && <ErrorMessage error={error} />}
         </div>
     )
 }
 
-export default connect(null)(TableList)
+const mapStateToProps = state => {
+    return {
+        listOfTables: state.tables.listOfTables,
+        error: state.tables.error
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        tableListFetch: () => dispatch(tableList()),
+        tableItemFetch: id => dispatch(tableItem(id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableList)

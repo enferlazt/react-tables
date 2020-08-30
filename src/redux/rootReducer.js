@@ -1,8 +1,14 @@
 import { combineReducers } from "redux";
-import { AuthReducer } from "./reducers/authReducer";
+import { authReducer } from "./reducers/authReducer";
 import { loaderReducer } from "./reducers/loaderReducer";
+import { addTableReducer } from "./reducers/addTableReducer";
+import { tablesReducer } from "./reducers/tablesReducer";
+import { connectRouter } from 'connected-react-router'
 
-export const rootReducer = combineReducers({
-    auth: AuthReducer,
-    loader: loaderReducer
+export const rootReducer = (history) => combineReducers({
+    auth: authReducer,
+    loader: loaderReducer,
+    addTable: addTableReducer,
+    tables: tablesReducer,
+    router: connectRouter(history)
 })

@@ -1,0 +1,42 @@
+.ErrorMessage {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    &__content {
+        position: fixed;
+        padding: 1rem 3rem;
+        background-color: rgba(177, 16, 16, 0.8);
+        box-shadow: 0 20px 50px -15px rgba(138, 138, 138, 0.8);
+        border: 1px solid rgba(138, 0, 0, 0.5);
+        color: white;
+        text-transform: uppercase;
+        bottom: 3rem;
+        cursor: default;
+        animation: showError 3s forwards;
+
+        h5 {
+            margin-bottom: 0;
+        }
+    }
+
+}
+
+@keyframes showError {
+    0% {
+        bottom: -100%;
+    }
+
+    10% {
+        bottom: 3rem;
+    }
+
+    90% {
+        bottom: 3rem;
+    }
+
+    100% {
+        bottom: -100%;
+    }
+}

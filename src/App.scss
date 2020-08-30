@@ -38,6 +38,7 @@
   height: 100%;
 
   &__content {
+    position: relative;
     flex-direction: column;
     max-width: 820px;
     height: 100%;

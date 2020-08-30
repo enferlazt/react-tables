@@ -5,8 +5,9 @@ import { Input } from '../../components/form/Input/Input'
 import { Submit } from '../../components/form/Submit/Submit'
 import { validInput } from '../../additional/validInput'
 import { auth } from '../../redux/actions/authActions'
+import { ErrorMessage } from '../../components/ErrorMessage/ErrorMessage'
 
-const Auth = ({authFetch}) => {
+const Auth = ({authFetch, error}) => {
     const [signIn, setSignIn] = useState([
         {
             value: '',
@@ -171,14 +172,21 @@ const Auth = ({authFetch}) => {
                     <Submit value="Sign Up" clickHandler={clickHandlerSignUp} />
                 </form>
             </div>
+            {error && <ErrorMessage error={error} />}
         </div>
     )
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = state => {
+    return {
+        error: state.auth.error
+    }
+}
+
+const mapDispatchToProps = dispatch => {
     return {
         authFetch: (email, password, url) => dispatch(auth(email, password, url))
     }
 }
 
-export default connect(null, mapDispatchToProps)(Auth)
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)

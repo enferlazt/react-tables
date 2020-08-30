@@ -1,16 +1,23 @@
-import { AUTH_SUCCESS, AUTH_FAILED, AUTH_LOGOUT } from "../actions/actionTypes"
+import { AUTH_SUCCESS, AUTH_FAILED, AUTH_LOGOUT, AUTH_START } from "../actions/actionTypes"
 
 const initialState = {
     username: null,
     error: null
 }
 
-export const AuthReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action) => {
     switch (action.type) {
+        case AUTH_START: 
+            return {
+                ...state,
+                error: null
+            }
+            
         case AUTH_SUCCESS:
             return {
                 ...state,
-                username: action.payload
+                username: action.payload,
+                error: null
             }
 
         case AUTH_FAILED:

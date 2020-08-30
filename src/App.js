@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import TableList from './pages/TableList/TableList';
 import Table from './pages/Table/Table';
 import Auth from './pages/Auth/Auth';
@@ -12,6 +12,7 @@ import { Loader } from './components/Loader/Loader';
 import { autoLogin } from './redux/actions/authActions';
 
 function App({loader, username, autoLogin}) {
+  const location = useLocation()
 
   useEffect(() => {
     autoLogin()
@@ -20,7 +21,7 @@ function App({loader, username, autoLogin}) {
   let routes = (
     <Switch>
       <Route path="/" exact component={TableList}></Route>
-      <Route path="/table" component={Table}></Route>
+      <Route path="/table/:id" component={Table}></Route>
       <Route path="/add-table" component={AddTable}></Route>
       <Route path="/logout" component={Logout}></Route>
       <Redirect to="/" />
@@ -37,7 +38,7 @@ function App({loader, username, autoLogin}) {
   }
 
   return (
-    <div className="page">
+    <div className={location.path !== '/' ? "page" : "page reverse"}>
       {username && <Navbar username={username} />}
       <div className="wrapper">
         <div className="wrapper__content">
