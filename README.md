@@ -1,8 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), [React Router Dom](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom), [React Redux](https://github.com/reduxjs/react-redux), [Redux Saga](https://github.com/redux-saga/redux-saga), [Connected React Router](https://github.com/supasate/connected-react-router), [Axios](https://github.com/axios/axios) and [Firebase](https://github.com/firebase/).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), [React Router Dom](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom), [React Redux](https://github.com/reduxjs/react-redux), [Redux Saga](https://github.com/redux-saga/redux-saga), [Connected React Router](https://github.com/supasate/connected-react-router), [Axios](https://github.com/axios/axios), [node-sass](https://github.com/sass/node-sass) and [Firebase](https://github.com/firebase/).
+
+Styled with Webpack Modules on SCSS preprocessor. Also used styles in [Foundation Framework](https://get.foundation/index.html)
 
 ## Description
 
 It is web app, which based on **React** and **Firebase** with using **Redux** like store and **Saga** for request built with **Axios**.
+
 
 This app is let fast create tables and easy fill them. The tables store in closet profile.
 
